@@ -1,13 +1,15 @@
 import React from "react";
-import InputField from "./components/InputField";
 import LoginForm from "./pages/LoginPage";
-import Panel from "./components/Panel";
+import Top_Header from "./components/Top_Header";
+import Middle_Header from "./components/Middle_Header";
+import Bottom_Header from "./components/Bottom_Header";
+import SelectField from "./components/SelectField";
+import AppRoutes from "./routes/AppRoutes";
 
 const App = () => {
   return (
     <div>
-      <Panel />
-      <LoginForm />
+      <AppRoutes />
     </div>
   );
 };

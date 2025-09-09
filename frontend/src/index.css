@@ -68,17 +68,26 @@ button:focus-visible {
   }
 } */
 
-.container {
+.main-container {
   margin: 0 auto;
   width: 1400px;
   padding: 0px 22px;
 }
 
+/* Normal input */
 .ant-input {
-  height: 38px;
-  width: 278px;
-  border-radius: var(--radius-lg);
-  /* border-color: var(--tw-border-style); */
-  border-width: 1px;
-  /* border-color: var(--color-gray-300); */
+  height: 38px !important;
+  width: 278px !important;
+  border-radius: var(--radius-lg) !important;
+  border-width: 1px !important;
+}
+
+/* Password input wrapper */
+.ant-input-password {
+  height: 38px !important;
+  width: 278px !important;
+  border-radius: var(--radius-lg) !important;
+  border-width: 1px !important;
+  display: flex; /* ensures content fits properly */
+  align-items: center;
 }

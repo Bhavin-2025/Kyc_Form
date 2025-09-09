@@ -21,15 +21,26 @@ const InputField = ({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <Input
-            {...field} // this handles value + onChange automatically
-            id={name}
-            type={type}
-            placeholder={placeholder}
-            className={`${error ? "border-red-500" : "border-gray-300"}`}
-          />
-        )}
+        render={({ field }) =>
+          type === "password" ? (
+            <Input.Password
+              {...field}
+              id={name}
+              placeholder={placeholder}
+              className={`${error ? "border-red-500" : "border-gray-300"}`}
+            />
+          ) : (
+            <Input
+              {...field}
+              id={name}
+              type={type}
+              placeholder={placeholder}
+              className={`h-[38px] w-[278px] rounded-lg${
+                error ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+          )
+        }
       />
 
       {error && <p className="text-red-500 text-sm">{error.message}</p>}

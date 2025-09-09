@@ -40,10 +40,10 @@ const LoginForm = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="container">
+    <div className="main-container">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-center items-center gap-1"
+        className="flex flex-col justify-center items-center gap-1 mt-45"
       >
         <h3 className="text-2xl mb-2.5 font-bold">
           Welcome back to Login Page

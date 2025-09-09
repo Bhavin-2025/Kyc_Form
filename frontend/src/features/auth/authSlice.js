@@ -1,3 +1,4 @@
+// src/features/auth/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../api/axiosInstance";
 
@@ -6,46 +7,47 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      // fetch all users
-      const response = await axiosInstance.get("/users");
-      const users = response.data;
+      const response = await axiosInstance.post("/login", {
+        username,
+        password,
+      });
 
-      // check if user exists
-      const user = users.find(
-        (u) => u.username === username && u.password === password
-      );
+      // Save user in localStorage
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      if (!user) {
-        return rejectWithValue("Invalid username or password");
-      }
-
-      return { user }; // success
+      return response.data.user;
     } catch (error) {
-      return rejectWithValue("Login failed");
+      return rejectWithValue(
+        error.response?.data?.message || "Login failed. Please try again."
+      );
     }
   }
 );
 
+const initialState = {
+  user: null,
+  isAuthenticated: false,
+  loading: true, // 🔥 important to prevent flicker on reload
+  error: null,
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: null,
-    loading: false,
-    error: null,
-    isAuthenticated: false,
-  },
+  initialState,
   reducers: {
-    logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      localStorage.removeItem("user");
-    },
     loadUserFromStorage: (state) => {
-      const savedUser = localStorage.getItem("user");
-      if (savedUser) {
-        state.user = JSON.parse(savedUser);
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        state.user = JSON.parse(storedUser);
         state.isAuthenticated = true;
       }
+      state.loading = false; // ✅ finished checking storage
+    },
+    logout: (state) => {
+      localStorage.removeItem("user");
+      state.user = null;
+      state.isAuthenticated = false;
+      state.loading = false;
     },
   },
   extraReducers: (builder) => {
@@ -55,10 +57,10 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isAuthenticated = true;
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        state.loading = false;
+        state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -67,5 +69,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, loadUserFromStorage } = authSlice.actions;
+export const { loadUserFromStorage, logout } = authSlice.actions;
+
 export default authSlice.reducer;
+  
