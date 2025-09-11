@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,6 @@ const schema = yup.object().shape({
 const LoginForm = () => {
   const {
     control,
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -30,7 +29,7 @@ const LoginForm = () => {
   );
 
   const onSubmit = (data) => {
-    dispatch(loginUser(data)); // dispatch thunk instead of console.log
+    dispatch(loginUser(data));
   };
 
   useEffect(() => {
@@ -49,22 +48,33 @@ const LoginForm = () => {
           Welcome back to Login Page
         </h3>
 
-        <InputField
-          label="Username"
+        {/* Username */}
+        <Controller
           name="username"
-          placeholder="Enter a username"
-          register={register}
-          error={errors.username}
           control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              label="Username"
+              placeholder="Enter a username"
+              error={errors.username}
+            />
+          )}
         />
-        <InputField
-          label="Password"
+
+        {/* Password */}
+        <Controller
           name="password"
-          type="password"
-          placeholder="Enter a password"
-          register={register}
-          error={errors.password}
           control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              label="Password"
+              type="password"
+              placeholder="Enter a password"
+              error={errors.password}
+            />
+          )}
         />
 
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}

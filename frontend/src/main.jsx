@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { store } from "./app/store";
+// import "./app.css";
 
 // Modified/New Code
 // Import order matters for CSS - Ant Design first, then your custom styles

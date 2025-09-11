@@ -9,18 +9,23 @@ const SelectField = ({
   disabled = false,
   onChange,
   style = { width: "100%" },
+  label,
 }) => {
   return (
-    <Select
-      mode={mode}
-      allowClear
-      style={style}
-      placeholder={placeholder}
-      defaultValue={defaultValue}
-      disabled={disabled}
-      onChange={onChange}
-      options={options}
-    />
+    <div>
+      <span>{label}</span>
+      <Select
+        mode={mode}
+        allowClear
+        style={style}
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        disabled={disabled}
+        onChange={onChange}
+        options={options}
+        size="large"
+      />
+    </div>
   );
 };
 

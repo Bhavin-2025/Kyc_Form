@@ -7,19 +7,19 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/login", {
-        username,
-        password,
-      });
-
-      // Save user in localStorage
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-
-      return response.data.user;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Login failed. Please try again."
+      const response = await axiosInstance.get(
+        `/users?username=${username}&password=${password}`
       );
+
+      if (response.data.length === 0) {
+        return rejectWithValue("Invalid username or password");
+      }
+
+      const user = response.data[0];
+      localStorage.setItem("user", JSON.stringify(user));
+      return user;
+    } catch (error) {
+      return rejectWithValue("Login failed. Please try again.");
     }
   }
 );
@@ -72,4 +72,3 @@ const authSlice = createSlice({
 export const { loadUserFromStorage, logout } = authSlice.actions;
 
 export default authSlice.reducer;
-  

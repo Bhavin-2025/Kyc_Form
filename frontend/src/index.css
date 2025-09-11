@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -70,24 +71,46 @@ button:focus-visible {
 
 .main-container {
   margin: 0 auto;
-  width: 1400px;
+  width: 100%;
+  max-width: 1400px;
   padding: 0px 22px;
 }
 
 /* Normal input */
 .ant-input {
-  height: 38px !important;
-  width: 278px !important;
-  border-radius: var(--radius-lg) !important;
-  border-width: 1px !important;
+  height: 40px;
+  width: 278px;
+  border-radius: var(--radius-lg);
+  border-width: 1px;
+  font-size: 16px;
 }
 
 /* Password input wrapper */
 .ant-input-password {
-  height: 38px !important;
+  height: 40px !important;
   width: 278px !important;
   border-radius: var(--radius-lg) !important;
   border-width: 1px !important;
   display: flex; /* ensures content fits properly */
   align-items: center;
+}
+.ant-select-selector,
+.ant-select-selection-wrap {
+  @apply !w-full;
+}
+
+.ant-form-item {
+  @apply !mb-5;
+}
+
+.ant-picker {
+  @apply !w-full;
+}
+
+.custom_Input {
+  height: 40px !important;
+  width: 180px !important;
+  border-radius: var(--radius-lg) !important;
+  border-width: 1px !important;
+  font-size: 16px;
 }
