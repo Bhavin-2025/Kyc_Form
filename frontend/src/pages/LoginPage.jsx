@@ -47,37 +47,37 @@ const LoginForm = () => {
         <h3 className="text-2xl mb-2.5 font-bold">
           Welcome back to Login Page
         </h3>
+        <div>
+          {/* Username */}
+          <Controller
+            name="username"
+            control={control}
+            render={({ field }) => (
+              <InputField
+                {...field}
+                label="Username"
+                placeholder="Enter a username"
+                error={errors.username}
+              />
+            )}
+          />
 
-        {/* Username */}
-        <Controller
-          name="username"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              label="Username"
-              placeholder="Enter a username"
-              error={errors.username}
-            />
-          )}
-        />
-
-        {/* Password */}
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <InputField
-              {...field}
-              label="Password"
-              type="password"
-              placeholder="Enter a password"
-              error={errors.password}
-            />
-          )}
-        />
-
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          {/* Password */}
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <InputField
+                {...field}
+                label="Password"
+                type="password"
+                placeholder="Enter a password"
+                error={errors.password}
+              />
+            )}
+          />
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        </div>
 
         <button
           type="submit"

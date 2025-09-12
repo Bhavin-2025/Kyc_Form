@@ -7,19 +7,21 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(
-        `/users?username=${username}&password=${password}`
-      );
+      // ✅ Now using POST instead of JSON-server GET
+      const response = await axiosInstance.post("/auth/login", {
+        username,
+        password,
+      });
 
-      if (response.data.length === 0) {
-        return rejectWithValue("Invalid username or password");
-      }
-
-      const user = response.data[0];
+      const user = response.data; // backend should return user + maybe token
       localStorage.setItem("user", JSON.stringify(user));
+
       return user;
     } catch (error) {
-      return rejectWithValue("Login failed. Please try again.");
+      // If backend sends a message, show that; else fallback
+      const message =
+        error.response?.data?.message || "Login failed. Please try again.";
+      return rejectWithValue(message);
     }
   }
 );
@@ -27,7 +29,7 @@ export const loginUser = createAsyncThunk(
 const initialState = {
   user: null,
   isAuthenticated: false,
-  loading: true, // 🔥 important to prevent flicker on reload
+  loading: true, // prevents flicker on reload
   error: null,
 };
 
@@ -41,7 +43,7 @@ const authSlice = createSlice({
         state.user = JSON.parse(storedUser);
         state.isAuthenticated = true;
       }
-      state.loading = false; // ✅ finished checking storage
+      state.loading = false;
     },
     logout: (state) => {
       localStorage.removeItem("user");
@@ -70,5 +72,4 @@ const authSlice = createSlice({
 });
 
 export const { loadUserFromStorage, logout } = authSlice.actions;
-
 export default authSlice.reducer;
