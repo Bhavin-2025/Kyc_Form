@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.js";
+import masterDataRoutes from "./routes/masterDataRoutes.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 
 // ✅ Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/master", masterDataRoutes);
 
 // ✅ Preflight handling
 app.options("*", cors());

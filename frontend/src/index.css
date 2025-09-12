@@ -69,6 +69,44 @@ button:focus-visible {
   }
 } */
 
+.no-spinner input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  -webkit-appearance: none; /* Chrome, Safari */
+  appearance: textfield; /* General - "input" is incorrect, should be "textfield" */
+}
+
+/* For Edge and Internet Explorer */
+.no-spinner input::-webkit-outer-spin-button,
+.no-spinner input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Add these direct selectors for Ant Design inputs */
+input[type="number"].ant-input {
+  -moz-appearance: textfield !important;
+  -webkit-appearance: none !important;
+  appearance: textfield !important;
+}
+
+input[type="number"].ant-input::-webkit-outer-spin-button,
+input[type="number"].ant-input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* .no-spinner input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+/* -webkit-appearance: none; Chrome, Safari */
+/* appearance: input; General */
+/* } */
+
+/* For Edge and Internet Explorer */
+/* .no-spinner input::-webkit-outer-spin-button,
+.no-spinner input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
 .main-container {
   margin: 0 auto;
   width: 100%;
