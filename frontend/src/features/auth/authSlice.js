@@ -176,5 +176,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { loadUserFromStorage, logout } = authSlice.actions;
+export const { loadUserFromStorage, logout, } = authSlice.actions;
 export default authSlice.reducer;

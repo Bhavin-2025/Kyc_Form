@@ -3,41 +3,43 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+
 import authRoutes from "./routes/authRoutes.js";
 import masterDataRoutes from "./routes/masterDataRoutes.js";
+import kycRoutes from "./routes/kycRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
-// ✅ Enable CORS
 app.use(
   cors({
-    origin: "http://localhost:5173", // your React app
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-// ✅ Body parser
 app.use(express.json());
 
-// ✅ Routes
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/master", masterDataRoutes);
+app.use("/api/kyc", kycRoutes);
 
-// ✅ Preflight handling
 app.options("*", cors());
 
-// ✅ Connect MongoDB
+const PORT = process.env.PORT || 5000;
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    const PORT = process.env.PORT || 5000;
+    console.log("✅ MongoDB Connected");
     app.listen(PORT, () =>
       console.log(`✅ Server running on http://localhost:${PORT}`)
     );
-    console.log("✅ MongoDB Connected");
   })
-  .catch((err) => console.error(err));
+  .catch((err) => {
+    console.error("Mongo connection error:", err);
+  });

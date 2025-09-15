@@ -5,7 +5,7 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Popconfirm } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../features/auth/authSlice"; // make sure you have this action
 
@@ -23,6 +23,8 @@ const Top_Header = () => {
     // redirect to login
     navigate("/login");
   };
+  const user = useSelector((state) => state.auth.user);
+  console.log(user.user.username, "user");
 
   return (
     <div className="flex justify-between items-center py-2.5 px-3 border-b border-gray-100">
@@ -52,7 +54,7 @@ const Top_Header = () => {
         <div className="flex items-center gap-3">
           <Avatar size="large" icon={<UserOutlined />} />
           <div>
-            <p className="text-sm font-semibold">Bhavin Giniya</p>
+            <p className="text-sm font-semibold">{user?.user?.username}</p>
             <p className="text-xs">Admin</p>
           </div>
         </div>

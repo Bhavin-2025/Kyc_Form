@@ -1,420 +1,25 @@
-// import React from "react";
-// import SelectField from "../components/SelectField";
-// import Form from "antd/es/form/Form";
-// import { Button, DatePicker, Input } from "antd";
-// import InputField from "../components/InputField";
-// import TextArea from "antd/es/input/TextArea";
-
-// const Step1BasicDetail = () => {
-//   const [form] = Form.useForm();
-//   const variant = Form.useWatch("variant", form);
-
-//   return (
-//     <div className=" main-container">
-//       <Form
-//         form={form}
-//         variant={variant || "outlined"}
-//         initialValues={{ variant: "outlined" }}
-//         layout="vertical"
-//       >
-//         {/* Category Details */}
-//         <div className="flex border-b border-[#D9D9D9]  mt-5">
-//           <div className="w-full max-w-[210px]">
-//             <p className="font-semibold text-xl">Category Details</p>
-//             <div className="flex item-center gap-2 mt-1">
-//               <p className="flex items-center text-xs font-medium">
-//                 Party Code
-//               </p>
-//               <span className=" bg-[#6B5DC7] text-white font-medium px-2.5 py-1.5 rounded-lg text-sm">
-//                 P123456
-//               </span>
-//             </div>
-//           </div>
-//           <div className="w-full">
-//             <div className="grid grid-cols-4 gap-6">
-//               <Form.Item
-//                 label="Category"
-//                 name="category"
-//                 rules={[{ required: true, message: "Please select category!" }]}
-//               >
-//                 <SelectField placeholder="Select Category" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Company/Individual"
-//                 name="companyIndividual"
-//                 rules={[
-//                   { required: true, message: "Please enter name!" },
-//                   { min: 3, message: "Must be at least 3 characters" },
-//                   {
-//                     pattern: /^[a-zA-Z\s]+$/,
-//                     message: "Only letters and spaces allowed",
-//                   },
-//                 ]}
-//               >
-//                 <InputField placeholder="Enter Name" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Business Type"
-//                 name="business"
-//                 rules={[
-//                   { required: true, message: "Please select business type!" },
-//                 ]}
-//               >
-//                 <SelectField placeholder="Select Business Type" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="GST No"
-//                 name="gst"
-//                 rules={[
-//                   { required: true, message: "Please enter GST No" },
-//                   {
-//                     pattern:
-//                       /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
-//                     message: "Enter a valid GSTIN (15 characters)",
-//                   },
-//                 ]}
-//               >
-//                 <InputField placeholder="Enter GST No" />
-//               </Form.Item>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Contact Details */}
-//         <div className="flex mt-5 border-b border-[#D9D9D9]">
-//           <div className="w-full max-w-[210px]">
-//             <p className="font-semibold text-xl">Contact Details</p>
-//           </div>
-//           <div className="w-full">
-//             <div className="grid grid-cols-4 gap-6">
-//               <Form.Item
-//                 label="Primary Contact"
-//                 name="primaryContact"
-//                 rules={[
-//                   { required: true, message: "Please enter primary contact!" },
-//                   { min: 3, message: "Must be at least 3 characters" },
-//                   {
-//                     pattern: /^[a-zA-Z\s]+$/,
-//                     message: "Only letters and spaces allowed",
-//                   },
-//                 ]}
-//               >
-//                 <InputField placeholder="Enter Primary Contact" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Primary Email"
-//                 name="primaryEmail"
-//                 rules={[
-//                   { required: true, message: "Please enter email!" },
-//                   { type: "email", message: "Enter valid email address" },
-//                 ]}
-//               >
-//                 <InputField placeholder="Enter Primary Email" type="email" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Secondary Email"
-//                 name="secondaryEmail"
-//                 rules={[
-//                   { type: "email", message: "Enter valid email address" },
-//                 ]}
-//               >
-//                 <InputField placeholder="Enter Secondary Email" type="email" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Birth Date"
-//                 name="birthDate"
-//                 rules={[
-//                   { required: true, message: "Please select Birth Date" },
-//                 ]}
-//               >
-//                 <DatePicker placeholder="Select Birth Date" size="large" />
-//               </Form.Item>
-//             </div>
-
-//             <div className="grid grid-cols-4 gap-6">
-//               <Form.Item
-//                 label="Country"
-//                 name="country"
-//                 rules={[{ required: true, message: "Please select country!" }]}
-//               >
-//                 <SelectField placeholder="Select Country" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Mobile Number"
-//                 name="mobile"
-//                 rules={[
-//                   { required: true, message: "Please enter mobile number!" },
-//                   {
-//                     pattern: /^[6-9]\d{9}$/,
-//                     message: "Enter a valid 10-digit Indian mobile number",
-//                   },
-//                 ]}
-//               >
-//                 <InputField
-//                   addonBefore="+91"
-//                   placeholder="Enter Mobile Number"
-//                   maxLength={10}
-//                   size="large"
-//                   type="number"
-//                   className="w-full rounded-md border-gray-300  no-spinner"
-//                 />
-//               </Form.Item>
-
-//               {/* 📞 Phone No. (Mandatory) */}
-//               <Form.Item label="Phone No." required>
-//                 <Input.Group compact className="flex gap-2">
-//                   <Form.Item
-//                     name={["phone", "cc"]}
-//                     noStyle
-//                     rules={[
-//                       { required: true, message: "Country Code is required" },
-//                       {
-//                         pattern: /^\d{1,4}$/,
-//                         message: "Country Code must be 1–4 digits",
-//                       },
-//                     ]}
-//                   >
-//                     <Input
-//                       className="!max-w-[46px] no-spinner"
-//                       placeholder="CC"
-//                       type="number"
-//                     />
-//                   </Form.Item>
-
-//                   <Form.Item
-//                     name={["phone", "ndc"]}
-//                     noStyle
-//                     rules={[
-//                       { required: true, message: "NDC is required" },
-//                       {
-//                         pattern: /^\d{1,5}$/,
-//                         message: "NDC must be 1–5 digits",
-//                       },
-//                     ]}
-//                   >
-//                     <Input
-//                       className="!max-w-[60px] no-spinner"
-//                       placeholder="NDC"
-//                       type="number"
-//                     />
-//                   </Form.Item>
-
-//                   <Form.Item
-//                     name={["phone", "number"]}
-//                     noStyle
-//                     rules={[
-//                       { required: true, message: "Phone number is required" },
-//                       {
-//                         pattern: /^\d{10}$/,
-//                         message: "Number must be 10 digits",
-//                       },
-//                     ]}
-//                   >
-//                     <Input
-//                       className="max-w-[150px] no-spinner"
-//                       placeholder="12345678"
-//                       type="number"
-//                     />
-//                   </Form.Item>
-//                 </Input.Group>
-//               </Form.Item>
-
-//               {/* 📠 Fax No. (Optional, but strict if filled) */}
-//               <Form.Item label="Fax No.">
-//                 <Input.Group compact className="flex gap-2">
-//                   <Form.Item
-//                     name={["fax", "cc"]}
-//                     noStyle
-//                     rules={[
-//                       {
-//                         validator: (_, value) => {
-//                           if (!value) return Promise.resolve();
-//                           if (!/^\d{1,4}$/.test(value)) {
-//                             return Promise.reject(
-//                               "Country Code must be 1–4 digits"
-//                             );
-//                           }
-//                           return Promise.resolve();
-//                         },
-//                       },
-//                     ]}
-//                   >
-//                     <Input
-//                       className="!max-w-[46px] no-spinner"
-//                       placeholder="CC"
-//                       type="number"
-//                     />
-//                   </Form.Item>
-
-//                   <Form.Item
-//                     name={["fax", "ndc"]}
-//                     noStyle
-//                     rules={[
-//                       {
-//                         validator: (_, value) => {
-//                           if (!value) return Promise.resolve();
-//                           if (!/^\d{1,5}$/.test(value)) {
-//                             return Promise.reject("NDC must be 1–5 digits");
-//                           }
-//                           return Promise.resolve();
-//                         },
-//                       },
-//                     ]}
-//                   >
-//                     <Input
-//                       className="!max-w-[60px] no-spinner"
-//                       placeholder="NDC"
-//                       type="number"
-//                     />
-//                   </Form.Item>
-
-//                   <Form.Item
-//                     name={["fax", "number"]}
-//                     noStyle
-//                     rules={[
-//                       {
-//                         validator: (_, value) => {
-//                           if (!value) return Promise.resolve();
-//                           if (!/^\d{10}$/.test(value)) {
-//                             return Promise.reject("Number must be 10 digits");
-//                           }
-//                           return Promise.resolve();
-//                         },
-//                       },
-//                     ]}
-//                   >
-//                     <Input
-//                       className="max-w-[150px] no-spinner"
-//                       placeholder="12345678"
-//                       type="number"
-//                     />
-//                   </Form.Item>
-//                 </Input.Group>
-//               </Form.Item>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Other Details */}
-//         <div className="flex mt-5 border-[#D9D9D9]">
-//           <div className="w-full max-w-[210px]">
-//             <p className="font-semibold text-xl">Other Details</p>
-//           </div>
-//           <div className="w-full">
-//             <div className="grid grid-cols-4 gap-6">
-//               <Form.Item
-//                 label="Sales Person/Country"
-//                 name="salesPersonCountry"
-//                 rules={[{ required: true, message: "Please select Employee!" }]}
-//               >
-//                 <SelectField placeholder="Select Employee" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Assistant Sales Person"
-//                 name="assistantSalesPerson"
-//               >
-//                 <SelectField placeholder="Select Assistant Sales Person" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Remark"
-//                 name="remark"
-//                 rules={[{ required: true, message: "Please enter remark!" }]}
-//               >
-//                 <TextArea className="!h-[40px]" placeholder="Enter Remarks" />
-//               </Form.Item>
-
-//               <Form.Item
-//                 label="Registration Date"
-//                 name="registrationDate"
-//                 rules={[{ required: true, message: "Please select date!" }]}
-//               >
-//                 <DatePicker placeholder="Select Date" size="large" />
-//               </Form.Item>
-//             </div>
-
-//             <div className="grid grid-cols-2 gap-6">
-//               <Form.Item
-//                 label="Department"
-//                 name="department"
-//                 rules={[
-//                   { required: true, message: "Please select department!" },
-//                 ]}
-//               >
-//                 <SelectField
-//                   className="!max-w-[580px]"
-//                   placeholder="Select Department"
-//                 />
-//               </Form.Item>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Action Buttons */}
-//         <div className="flex gap-5 justify-end items-center">
-//           <Form.Item>
-//             <Button
-//               className="!bg-[#6B5DC7] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
-//               htmlType="submit"
-//             >
-//               Save & Next
-//             </Button>
-//           </Form.Item>
-//           <Form.Item>
-//             <Button
-//               className="!bg-[#BEBEBE] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
-//               htmlType="submit"
-//             >
-//               Save
-//             </Button>
-//           </Form.Item>
-//           <Form.Item>
-//             <Button
-//               className="!bg-[#696774] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
-//               htmlType="reset"
-//             >
-//               Reset
-//             </Button>
-//           </Form.Item>
-//           <Form.Item>
-//             <Button
-//               className="!bg-[#E2E2E2] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
-//               htmlType="button"
-//             >
-//               Close
-//             </Button>
-//           </Form.Item>
-//         </div>
-//       </Form>
-//     </div>
-//   );
-// };
-
-// export default Step1BasicDetail;
-
-import React from "react";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../features/auth/authSlice";
+import React, { useEffect, useState } from "react";
+import { Button, DatePicker, Form, Input, message, Space } from "antd";
 import SelectField from "../components/SelectField";
-import Form from "antd/es/form/Form";
-import { Button, DatePicker, Input, message } from "antd";
 import InputField from "../components/InputField";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  saveKyc,
+  fetchKycData,
+  resetBasicDetails,
+} from "../features/kyc/kycSlice";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const Step1BasicDetail = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const variant = Form.useWatch("variant", form);
+
+  // Master data state
   const [categories, setCategories] = useState([]);
   const [businessTypes, setBusinessTypes] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -422,99 +27,114 @@ const Step1BasicDetail = () => {
   const [salesPerson, setSalesPerson] = useState([]);
   const [assistantSalesPerson, setAssistantSalesPerson] = useState([]);
 
+  // Track if all master data is loaded
+  const [masterDataLoaded, setMasterDataLoaded] = useState(false);
+
+  // Get user ID and KYC data from Redux
+  const userId = useSelector((state) => state.auth.user.user._id);
+  const { basicDetails, loading } = useSelector((state) => state.kyc);
+
+  // Fetch master data
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const categoryRes = await axiosInstance.get("/master/category");
+        // Use Promise.all to fetch all data in parallel
+        const [
+          categoryRes,
+          businessRes,
+          countryRes,
+          deptRes,
+          salesPerRes,
+          assistantSalesPerRes,
+        ] = await Promise.all([
+          axiosInstance.get("/master/category"),
+          axiosInstance.get("/master/businessType"),
+          axiosInstance.get("/master/country"),
+          axiosInstance.get("/master/department"),
+          axiosInstance.get("/master/salesPerson"),
+          axiosInstance.get("/master/assistantSalesPerson"),
+        ]);
+
         setCategories(categoryRes.data);
-
-        const businessRes = await axiosInstance.get("/master/businessType");
         setBusinessTypes(businessRes.data);
-        const countryRes = await axiosInstance.get("/master/country");
         setCountries(countryRes.data);
-
-        const deptRes = await axiosInstance.get("/master/department");
         setDepartments(deptRes.data);
-        const salesPerRes = await axiosInstance.get("/master/salesPerson");
         setSalesPerson(salesPerRes.data);
-        const assistantSalesPerRes = await axiosInstance.get(
-          "/master/assistantSalesPerson"
-        );
         setAssistantSalesPerson(assistantSalesPerRes.data);
+
+        // Set flag when all master data is loaded
+        setMasterDataLoaded(true);
       } catch (err) {
         console.error("Error fetching options", err);
+        message.error("Failed to load master data");
       }
     };
     fetchOptions();
   }, []);
 
+  // Fetch KYC data if not in Redux
+
+  console.log("basicDetails", basicDetails);
+
+  // Submit handler
   const onFinish = async (values) => {
     try {
-      // transform mobile if user used simple mobile input (string)
-      let payload = { ...values };
+      let payload = { ...values, userId };
 
-      // MOBILE: if mobile is string (old UI) -> convert to object
+      // Transform mobile
       if (
         typeof values.mobile === "string" ||
         typeof values.mobile === "number"
       ) {
         payload.mobile = {
-          countryCode: "+91", // UI shows +91 fixed
+          countryCode: "+91",
           number: String(values.mobile).trim(),
         };
-      } else if (!values.mobile) {
-        payload.mobile = undefined;
       }
 
-      // PHONE & FAX: AntD uses nested fields for phone/fax (if present)
-      // Ensure we send objects with cc, ndc, number (if user filled parts separately)
+      // Transform phone
       if (values.phone) {
         payload.phone = {
-          cc: values.phone.cc ? String(values.phone.cc).trim() : undefined,
-          ndc: values.phone.ndc ? String(values.phone.ndc).trim() : undefined,
-          number: values.phone.number
-            ? String(values.phone.number).trim()
-            : undefined,
+          cc: values.phone.cc || undefined,
+          ndc: values.phone.ndc || undefined,
+          number: values.phone.number || undefined,
         };
       }
 
+      // Transform fax
       if (values.fax) {
         payload.fax = {
-          cc: values.fax.cc ? String(values.fax.cc).trim() : undefined,
-          ndc: values.fax.ndc ? String(values.fax.ndc).trim() : undefined,
-          number: values.fax.number
-            ? String(values.fax.number).trim()
-            : undefined,
+          cc: values.fax.cc || undefined,
+          ndc: values.fax.ndc || undefined,
+          number: values.fax.number || undefined,
         };
       }
 
-      // If birthDate/registrationDate are Moment objects, convert to ISO strings
-      if (values.birthDate && values.birthDate.toISOString) {
+      // Transform dates
+      if (values.birthDate?.toISOString) {
         payload.birthDate = values.birthDate.toISOString();
       }
-      if (values.registrationDate && values.registrationDate.toISOString) {
+      if (values.registrationDate?.toISOString) {
         payload.registrationDate = values.registrationDate.toISOString();
       }
 
-      // For now: generate a temporary username/password if not present (depends on your flow).
-      // If your app has dedicated auth fields elsewhere, remove this. Here we add placeholders:
-      if (!payload.username)
-        payload.username = payload.companyIndividual || `user_${Date.now()}`;
-      if (!payload.password)
-        payload.password = Math.random().toString(36).slice(-8); // temp password
+      // Modified/New Code - Use Redux thunk to save data
+      const resultAction = await dispatch(saveKyc(payload));
 
-      // Dispatch register thunk
-      const resultAction = await dispatch(registerUser(payload));
-      if (registerUser.fulfilled.match(resultAction)) {
-        message.success("Saved and synced with server");
-        // optionally redirect or move next
+      if (saveKyc.fulfilled.match(resultAction)) {
+        message.success("KYC Saved Successfully");
+        // Navigate to next step if "Save & Next" was clicked
+        if (values.nextStep) {
+          navigate("/kyc/step2"); // Adjust path as needed
+        }
       } else {
-        const err = resultAction.payload || resultAction.error?.message;
-        message.error(`Save failed: ${err}`);
+        throw new Error(resultAction.error?.message || "Save failed");
       }
     } catch (err) {
-      console.error("onFinish error", err);
-      message.error("Unexpected error. Check console.");
+      console.error("Save KYC Error:", err);
+      message.error(
+        err.response?.data?.message || err.message || "Save failed"
+      );
     }
   };
 
@@ -523,15 +143,101 @@ const Step1BasicDetail = () => {
     message.error("Please correct the errors before submitting.");
   };
 
+  // Modified/New Code
+  // Handle reset button
+  const handleReset = () => {
+    form.resetFields();
+    dispatch(resetBasicDetails());
+    message.success("Form has been reset");
+  };
+
+  // Modified/New Code
+  // Handle Save & Next button
+  const handleSaveAndNext = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        onFinish({ ...values, nextStep: true });
+      })
+      .catch((err) => {
+        onFinishFailed(err);
+      });
+  };
+
+  // Modified/New Code
+  // Handle Save button
+  const handleSave = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        onFinish(values);
+      })
+      .catch((err) => {
+        onFinishFailed(err);
+      });
+  };
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchKycData(userId))
+        .unwrap()
+        .catch((error) => {
+          // Only show error message for non-404 errors
+          if (error !== "Not Found") {
+            message.error(`Failed to load KYC data: ${error}`);
+          }
+        });
+    }
+  }, [dispatch, userId]);
+
+  // Populate form with data from Redux when available
+  // Modified/New Code - Wait for master data to be loaded before setting form values
+  useEffect(() => {
+    if (basicDetails && masterDataLoaded) {
+      console.log("Setting form values with:", basicDetails);
+
+      // Transform dates from ISO strings to moment objects for DatePicker
+      const formData = {
+        ...basicDetails,
+        birthDate: basicDetails.birthDate
+          ? moment(basicDetails.birthDate)
+          : undefined,
+        registrationDate: basicDetails.registrationDate
+          ? moment(basicDetails.registrationDate)
+          : undefined,
+        // Transform phone and fax from objects to form structure
+        phone: basicDetails.phone
+          ? {
+              cc: basicDetails.phone.cc,
+              ndc: basicDetails.phone.ndc,
+              number: basicDetails.phone.number,
+            }
+          : undefined,
+        fax: basicDetails.fax
+          ? {
+              cc: basicDetails.fax.cc,
+              ndc: basicDetails.fax.ndc,
+              number: basicDetails.fax.number,
+            }
+          : undefined,
+        // Transform mobile from object to string for the form
+        mobile: basicDetails.mobile?.number || basicDetails.mobile,
+      };
+
+      // Set form values after a short delay to ensure select options are loaded
+      setTimeout(() => {
+        form.setFieldsValue(formData);
+      }, 500);
+    }
+  }, [basicDetails, form, masterDataLoaded, categories]);
+
   return (
-    <div className=" main-container">
+    <div className="main-container">
       <Form
         form={form}
         variant={variant || "outlined"}
-        initialValues={{ variant: "outlined" }}
+        // initialValues={formData}
         layout="vertical"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         {/* Category Details */}
         <div className="flex border-b border-[#D9D9D9]  mt-5">
@@ -559,6 +265,8 @@ const Step1BasicDetail = () => {
                     label: c.label,
                     value: c.value,
                   }))}
+                  // Modified/New Code - Add loading state
+                  loading={!masterDataLoaded}
                 />
               </Form.Item>
 
@@ -682,7 +390,7 @@ const Step1BasicDetail = () => {
 
               <Form.Item
                 label="Mobile Number"
-                name="mobile" // keep UI same (string). onFinish we transform to object
+                name="mobile"
                 rules={[
                   { required: true, message: "Please enter mobile number!" },
                   {
@@ -701,9 +409,9 @@ const Step1BasicDetail = () => {
                 />
               </Form.Item>
 
-              {/* Phone No. (split fields) */}
+              {/* Phone */}
               <Form.Item label="Phone No." required>
-                <Input.Group compact className="flex gap-2">
+                <Space.Compact className="flex gap-2">
                   <Form.Item
                     name={["phone", "cc"]}
                     noStyle
@@ -757,80 +465,34 @@ const Step1BasicDetail = () => {
                       type="number"
                     />
                   </Form.Item>
-                </Input.Group>
+                </Space.Compact>
               </Form.Item>
 
               {/* Fax */}
               <Form.Item label="Fax No.">
-                <Input.Group compact className="flex gap-2">
-                  <Form.Item
-                    name={["fax", "cc"]}
-                    noStyle
-                    rules={[
-                      {
-                        validator: (_, value) => {
-                          if (!value) return Promise.resolve();
-                          if (!/^\d{1,4}$/.test(String(value))) {
-                            return Promise.reject(
-                              "Country Code must be 1–4 digits"
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
+                <Space.Compact className="flex gap-2">
+                  <Form.Item name={["fax", "cc"]} noStyle>
                     <Input
                       className="!max-w-[46px] no-spinner"
                       placeholder="CC"
                       type="number"
                     />
                   </Form.Item>
-
-                  <Form.Item
-                    name={["fax", "ndc"]}
-                    noStyle
-                    rules={[
-                      {
-                        validator: (_, value) => {
-                          if (!value) return Promise.resolve();
-                          if (!/^\d{1,5}$/.test(String(value))) {
-                            return Promise.reject("NDC must be 1–5 digits");
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
+                  <Form.Item name={["fax", "ndc"]} noStyle>
                     <Input
                       className="!max-w-[60px] no-spinner"
                       placeholder="NDC"
                       type="number"
                     />
                   </Form.Item>
-
-                  <Form.Item
-                    name={["fax", "number"]}
-                    noStyle
-                    rules={[
-                      {
-                        validator: (_, value) => {
-                          if (!value) return Promise.resolve();
-                          if (!/^\d{10}$/.test(String(value))) {
-                            return Promise.reject("Number must be 10 digits");
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
+                  <Form.Item name={["fax", "number"]} noStyle>
                     <Input
                       className="max-w-[150px] no-spinner"
                       placeholder="12345678"
                       type="number"
                     />
                   </Form.Item>
-                </Input.Group>
+                </Space.Compact>
               </Form.Item>
             </div>
           </div>
@@ -887,7 +549,7 @@ const Step1BasicDetail = () => {
               </Form.Item>
             </div>
 
-            <div className="grid grid-cols-2 gap-6 mt-4">
+            <div className="grid grid-cols-2 gap-6 ">
               <Form.Item
                 label="Department"
                 name="department"
@@ -910,38 +572,34 @@ const Step1BasicDetail = () => {
 
         {/* Action Buttons */}
         <div className="flex gap-5 justify-end items-center mt-6">
-          <Form.Item>
-            <Button
-              className="!bg-[#6B5DC7] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
-              htmlType="submit"
-            >
-              Save & Next
-            </Button>
-          </Form.Item>
-          <Form.Item>
-            <Button
-              className="!bg-[#BEBEBE] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
-              htmlType="submit"
-            >
-              Save
-            </Button>
-          </Form.Item>
-          <Form.Item>
-            <Button
-              className="!bg-[#696774] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
-              htmlType="reset"
-            >
-              Reset
-            </Button>
-          </Form.Item>
-          <Form.Item>
-            <Button
-              className="!bg-[#E2E2E2] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
-              htmlType="button"
-            >
-              Close
-            </Button>
-          </Form.Item>
+          <Button
+            className="!bg-[#6B5DC7] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
+            onClick={handleSaveAndNext}
+            loading={loading}
+            disabled={!masterDataLoaded}
+          >
+            Save & Next
+          </Button>
+          <Button
+            className="!bg-[#BEBEBE] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
+            onClick={handleSave}
+            loading={loading}
+            disabled={!masterDataLoaded}
+          >
+            Save
+          </Button>
+          <Button
+            className="!bg-[#696774] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
+            onClick={handleReset}
+          >
+            Reset
+          </Button>
+          <Button
+            className="!bg-[#E2E2E2] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
+            onClick={() => navigate(-1)} // Go back to previous page
+          >
+            Close
+          </Button>
         </div>
       </Form>
     </div>

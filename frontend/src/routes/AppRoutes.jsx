@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUserFromStorage } from "../features/auth/authSlice"; // ✅ fixed path
 
@@ -12,10 +12,16 @@ import ProtectedRoute from "../components/ProtectedRoute";
 const AppRoutes = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(loadUserFromStorage());
-  }, [dispatch]);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      dispatch(loadUserFromStorage());
+      navigate("/kyc");
+      // return <Navigate replace to={"/kyc"} />;
+    }
+  }, []);
 
   return (
     <Routes>

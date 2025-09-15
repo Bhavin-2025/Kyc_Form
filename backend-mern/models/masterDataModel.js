@@ -1,14 +1,11 @@
 import mongoose from "mongoose";
 
-const masterDataSchema = new mongoose.Schema(
-  {
-    type: { type: String, required: true }, // e.g. "category"
-    label: { type: String, required: true }, // e.g. "Manufacturer"
-    value: { type: String, required: true }, // e.g. "manufacturer"
-  },
-  { timestamps: true }
-);
+const masterSchema = new mongoose.Schema({
+  type: { type: String, required: true }, // e.g., "category", "businessType"
+  label: { type: String, required: true },
+  value: { type: String, required: true },
+});
 
-const MasterData = mongoose.model("MasterData", masterDataSchema);
+const MasterData = mongoose.model("MasterData", masterSchema);
 
 export default MasterData;

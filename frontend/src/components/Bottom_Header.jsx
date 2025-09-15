@@ -1,28 +1,26 @@
 // src/components/Bottom_Header.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { panels } from "../utils/constants";
+import { handleChangeCurrentPanel } from "../features/kyc/kycSlice";
+import { useDispatch } from "react-redux";
 
 const Bottom_Header = () => {
-  const linkClass = ({ isActive }) =>
-    isActive
-      ? "text-[#6B5DC7] text-xs font-medium underline underline-offset-[10px] underline decoration-1"
-      : "text-[#696774] text-xs font-normal";
+  const dispatch = useDispatch();
 
   return (
     <div>
       <div className="flex px-5 py-3 gap-9 bg-[#F3F2F8] ">
-        <NavLink to="/kyc/step1" className={linkClass}>
-          Basic Details
-        </NavLink>
-        <NavLink to="/kyc/step2" className={linkClass}>
-          Terms Details
-        </NavLink>
-        <NavLink to="/kyc/step3" className={linkClass}>
-          User Details
-        </NavLink>
-        <NavLink to="/kyc/step4" className={linkClass}>
-          Address Details
-        </NavLink>
+        {panels.map((details) => {
+          return (
+            <button
+              key={details?.value}
+              onClick={() => dispatch(handleChangeCurrentPanel(details?.value))}
+            >
+              {details?.label}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
