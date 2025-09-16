@@ -120,7 +120,11 @@ input[type="number"].ant-input::-webkit-inner-spin-button {
   width: 278px;
   border-radius: var(--radius-lg);
   border-width: 1px;
-  font-size: 16px;
+  font-size: 14px;
+}
+
+.ant-select-selection-item {
+  font-size: 14px;
 }
 
 /* Password input wrapper */
@@ -157,4 +161,9 @@ input[type="number"].ant-input::-webkit-inner-spin-button {
   -moz-appearance: textfield; /* Firefox */
   -webkit-appearance: none; /* Chrome, Safari */
   appearance: textfield; /* General */
+}
+
+.ant-form-item-label label {
+  font-weight: 500;
+  font-size: x-small;
 }

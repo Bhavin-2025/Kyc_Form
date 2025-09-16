@@ -1,7 +1,6 @@
 import React from "react";
 import Step1BasicDetail from "../form/Step1BasicDetail";
 import Step2TermDetail from "../form/Step2TermDetail";
-import { useState } from "react";
 import Step3UserDetails from "../form/Step3UserDetails";
 import Step4AddressDetails from "../form/Step4AddressDetails";
 import { useSelector } from "react-redux";

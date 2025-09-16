@@ -7,6 +7,8 @@ export const saveKyc = async (req, res) => {
   try {
     const { userId, ...kycData } = req.body;
 
+    console.log(req.body, "req.body");
+
     console.log(userId, "userid");
 
     if (!userId) {

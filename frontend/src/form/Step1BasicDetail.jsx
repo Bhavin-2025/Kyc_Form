@@ -9,6 +9,7 @@ import {
   saveKyc,
   fetchKycData,
   resetBasicDetails,
+  handleChangeCurrentPanel,
 } from "../features/kyc/kycSlice";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -74,8 +75,6 @@ const Step1BasicDetail = () => {
 
   // Fetch KYC data if not in Redux
 
-  console.log("basicDetails", basicDetails);
-
   // Submit handler
   const onFinish = async (values) => {
     try {
@@ -125,7 +124,7 @@ const Step1BasicDetail = () => {
         message.success("KYC Saved Successfully");
         // Navigate to next step if "Save & Next" was clicked
         if (values.nextStep) {
-          navigate("/kyc/step2"); // Adjust path as needed
+          dispatch(handleChangeCurrentPanel(2)); // Adjust path as needed
         }
       } else {
         throw new Error(resultAction.error?.message || "Save failed");
@@ -227,12 +226,12 @@ const Step1BasicDetail = () => {
       // Set form values after a short delay to ensure select options are loaded
       setTimeout(() => {
         form.setFieldsValue(formData);
-      }, 500);
+      }, 200);
     }
-  }, [basicDetails, form, masterDataLoaded, categories]);
+  }, [basicDetails, form, masterDataLoaded]);
 
   return (
-    <div className="main-container">
+    <div className="px-3">
       <Form
         form={form}
         variant={variant || "outlined"}

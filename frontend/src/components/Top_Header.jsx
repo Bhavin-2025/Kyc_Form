@@ -7,11 +7,13 @@ import {
 import { Avatar, Button, Popconfirm } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../features/auth/authSlice"; // make sure you have this action
+import { logout } from "../features/auth/authSlice";
 
 const Top_Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Get user from Redux state
+  const user = useSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     // clear localStorage
@@ -23,8 +25,9 @@ const Top_Header = () => {
     // redirect to login
     navigate("/login");
   };
-  const user = useSelector((state) => state.auth.user);
-  console.log(user.user.username, "user");
+
+  // Modified/New Code - Add null check
+  const username = user?.user?.username || "User"; // Fallback to "User" if username is not available
 
   return (
     <div className="flex justify-between items-center py-2.5 px-3 border-b border-gray-100">
@@ -54,7 +57,8 @@ const Top_Header = () => {
         <div className="flex items-center gap-3">
           <Avatar size="large" icon={<UserOutlined />} />
           <div>
-            <p className="text-sm font-semibold">{user?.user?.username}</p>
+            {/* Modified/New Code - Use the safe username variable */}
+            <p className="text-sm font-semibold">{username}</p>
             <p className="text-xs">Admin</p>
           </div>
         </div>
