@@ -231,7 +231,7 @@ const Step1BasicDetail = () => {
   }, [basicDetails, form, masterDataLoaded]);
 
   return (
-    <div className="px-3">
+    <div className="px-6">
       <Form
         form={form}
         variant={variant || "outlined"}
@@ -459,7 +459,7 @@ const Step1BasicDetail = () => {
                     ]}
                   >
                     <Input
-                      className="max-w-[150px] no-spinner"
+                      className="!w-full !max-w-[150px] no-spinner"
                       placeholder="12345678"
                       type="number"
                     />
@@ -486,7 +486,7 @@ const Step1BasicDetail = () => {
                   </Form.Item>
                   <Form.Item name={["fax", "number"]} noStyle>
                     <Input
-                      className="max-w-[150px] no-spinner"
+                      className="!w-full !max-w-[150px]  no-spinner"
                       placeholder="12345678"
                       type="number"
                     />
@@ -593,12 +593,12 @@ const Step1BasicDetail = () => {
           >
             Reset
           </Button>
-          <Button
+          {/* <Button
             className="!bg-[#E2E2E2] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
             onClick={() => navigate(-1)} // Go back to previous page
           >
             Close
-          </Button>
+          </Button> */}
         </div>
       </Form>
     </div>

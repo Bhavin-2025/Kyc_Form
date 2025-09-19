@@ -11,6 +11,7 @@ const SelectField = ({
   style = { width: "100%" },
   label,
   value,
+  ...rest
 }) => {
   return (
     <div>
@@ -25,7 +26,8 @@ const SelectField = ({
         onChange={onChange}
         options={options}
         size="large"
-        value={value ?? null}
+        value={value}
+        {...rest}
       />
     </div>
   );

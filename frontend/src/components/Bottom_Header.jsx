@@ -22,12 +22,12 @@ const Bottom_Header = () => {
           return (
             <button
               key={details?.value}
-              onClick={() => dispatch(handleChangeCurrentPanel(details?.value))}
+              // onClick={() => dispatch(handleChangeCurrentPanel(details?.value))}
               // Modified/New Code - Add conditional classes for active state
               className={`${
                 isActive
-                  ? " text-[#6B5DC7] underline underline-offset-12  decoration-2 cursor-pointer"
-                  : "text-gray-600 font-medium text-sm cursor-pointer"
+                  ? " text-[#6B5DC7] underline underline-offset-12  decoration-2"
+                  : "text-gray-600 font-medium text-sm "
               }`}
             >
               {details?.label}

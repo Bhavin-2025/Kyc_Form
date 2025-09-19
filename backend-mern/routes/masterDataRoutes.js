@@ -1,16 +1,19 @@
-import express from "express";
-import MasterData from "../models/masterDataModel.js";
+import express from 'express';
+import { 
+  getMasterDataByType, 
+  getStatesByCountry,
+  getCitiesByState
+} from '../controllers/masterDataController.js';
 
 const router = express.Router();
 
-router.get("/:type", async (req, res) => {
-  try {
-    const { type } = req.params;
-    const data = await MasterData.find({ type });
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+// Route for states by country
+router.get('/states/:countryCode', getStatesByCountry);
+
+// Route for cities by state
+router.get('/cities/:stateCode', getCitiesByState);
+
+// General route for master data by type - must be last to avoid conflicts
+router.get('/:type', getMasterDataByType);
 
 export default router;

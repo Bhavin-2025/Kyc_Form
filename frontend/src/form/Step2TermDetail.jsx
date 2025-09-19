@@ -11,12 +11,9 @@ import {
   resetBasicDetails,
   handleChangeCurrentPanel,
 } from "../features/kyc/kycSlice";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
 const Step2TermDetail = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const variant = Form.useWatch("variant", form);
   const party = Form.useWatch("dayTerm", form);
   console.log("Current party value:", party);
@@ -32,7 +29,9 @@ const Step2TermDetail = () => {
 
   // Get user ID and KYC data from Redux
   const userId = useSelector((state) => state.auth.user.user._id);
-  const { basicDetails, loading } = useSelector((state) => state.kyc);
+  const { basicDetails, loading, currentSelectedPanel } = useSelector(
+    (state) => state.kyc
+  );
 
   // Fetch master data
   useEffect(() => {
@@ -143,8 +142,6 @@ const Step2TermDetail = () => {
     }
   }, [dispatch, userId]);
 
-  // Populate form with data from Redux when available
-  // Modified/New Code - Wait for master data to be loaded before setting form values
   useEffect(() => {
     if (basicDetails && masterDataLoaded) {
       console.log("Setting form values with:", basicDetails);
@@ -163,7 +160,7 @@ const Step2TermDetail = () => {
   console.log("FormValue", Form.useWatch());
 
   return (
-    <div className="px-3">
+    <div className="px-6">
       <Form
         form={form}
         variant={variant || "outlined"}
@@ -307,6 +304,14 @@ const Step2TermDetail = () => {
         {/* Action Buttons */}
         <div className="flex gap-5 justify-end items-center mt-6">
           <Button
+            className="!bg-[#E2E2E2] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
+            onClick={() =>
+              dispatch(handleChangeCurrentPanel(currentSelectedPanel - 1))
+            }
+          >
+            Previous
+          </Button>
+          <Button
             className="!bg-[#6B5DC7] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
             onClick={handleSaveAndNext}
             loading={loading}
@@ -327,12 +332,6 @@ const Step2TermDetail = () => {
             onClick={handleReset}
           >
             Reset
-          </Button>
-          <Button
-            className="!bg-[#E2E2E2] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
-            onClick={() => navigate(-1)} // Go back to previous page
-          >
-            Close
           </Button>
         </div>
       </Form>
