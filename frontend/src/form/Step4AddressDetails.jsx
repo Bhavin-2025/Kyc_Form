@@ -538,14 +538,35 @@ const Step4AddressDetail = () => {
           >
             Previous
           </Button>
+          
           <Button
             className="!bg-[#6B5DC7] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
-            onClick={handleSaveAndNext}
+            onClick={() => {
+              form
+                .validateFields()
+                .then((values) => {
+                  // First save the data
+                  onFinish(values)
+                    .then(() => {
+                      // After successful save, redirect to the new section
+                      dispatch(handleChangeCurrentPanel(5)); // Use 5 as the new panel value
+                      message.success("KYC form submitted successfully!");
+                    })
+                    .catch((err) => {
+                      console.error("Submit error:", err);
+                      message.error("Failed to submit form. Please try again.");
+                    });
+                })
+                .catch((err) => {
+                  onFinishFailed(err);
+                });
+            }}
             loading={loading || submitting}
             disabled={!masterDataLoaded || submitting}
           >
-            Save & Next
+            Submit
           </Button>
+          
           <Button
             className="!bg-[#BEBEBE] !font-semibold !w-[124px] !px-5 !py-4 !rounded-[10px] !text-black"
             onClick={handleSave}
@@ -554,6 +575,7 @@ const Step4AddressDetail = () => {
           >
             Save
           </Button>
+          
           <Button
             className="!bg-[#696774] !font-semibold !w-[124px] !px-5 !py-3 !rounded-[10px] !text-white"
             onClick={handleReset}

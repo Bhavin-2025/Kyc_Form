@@ -11,12 +11,10 @@ import {
   resetBasicDetails,
   handleChangeCurrentPanel,
 } from "../features/kyc/kycSlice";
-import { useNavigate } from "react-router-dom";
 
 const Step3UserDetail = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const variant = Form.useWatch("variant", form);
   const mobileLogin = Form.useWatch("mobile", form);
   console.log(mobileLogin, "Mobile");
@@ -101,6 +99,10 @@ const Step3UserDetail = () => {
 
       if (saveKyc.fulfilled.match(resultAction)) {
         message.success("KYC Saved Successfully");
+
+        // Modified/New Code - Update Redux store with new KYC details
+        dispatch(fetchKycData(userId));
+
         // Navigate to next step if "Save & Next" was clicked
         if (values.nextStep) {
           dispatch(handleChangeCurrentPanel(4)); // Adjust path as needed

@@ -12,12 +12,10 @@ import {
   handleChangeCurrentPanel,
 } from "../features/kyc/kycSlice";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
 
 const Step1BasicDetail = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const variant = Form.useWatch("variant", form);
 
   // Master data state

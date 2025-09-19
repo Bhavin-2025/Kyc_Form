@@ -7,33 +7,47 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Bottom_Header = () => {
   const dispatch = useDispatch();
-  // Modified/New Code
   const currentSelectedPanel = useSelector(
     (state) => state.kyc.currentSelectedPanel
   );
 
+  // Modified/New Code - Check if we're in the summary view
+  const isInSummaryView = currentSelectedPanel === 5;
+
+  // If in summary view, don't show the regular panels
+  if (isInSummaryView) {
+    return (
+      <div>
+        <div className="flex px-5 py-3 gap-9 bg-[#F3F2F8]">
+          <button className="text-[#6B5DC7] underline underline-offset-12 decoration-2">
+            Summary
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="flex px-5 py-3 gap-9 bg-[#F3F2F8]">
-        {panels.map((details) => {
-          // Modified/New Code - Check if this panel is the active one
-          const isActive = currentSelectedPanel === details.value;
+        {panels
+          .filter((panel) => !panel.isHidden) // Filter out hidden panels
+          .map((details) => {
+            const isActive = currentSelectedPanel === details.value;
 
-          return (
-            <button
-              key={details?.value}
-              // onClick={() => dispatch(handleChangeCurrentPanel(details?.value))}
-              // Modified/New Code - Add conditional classes for active state
-              className={`${
-                isActive
-                  ? " text-[#6B5DC7] underline underline-offset-12  decoration-2"
-                  : "text-gray-600 font-medium text-sm "
-              }`}
-            >
-              {details?.label}
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={details?.value}
+                className={`${
+                  isActive
+                    ? "text-[#6B5DC7] underline underline-offset-12 decoration-2"
+                    : "text-gray-600 font-medium text-sm"
+                }`}
+              >
+                {details?.label}
+              </button>
+            );
+          })}
       </div>
     </div>
   );
