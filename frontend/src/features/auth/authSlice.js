@@ -110,11 +110,17 @@ import axiosInstance from "../../api/axiosInstance";
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ username, password }, { rejectWithValue }) => {
+    console.log(username, "user");
+
+    console.log(password, "password");
+
     try {
       const response = await axiosInstance.post("/auth/login", {
         username,
         password,
       });
+      console.log(response, "response");
+
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
       return user;

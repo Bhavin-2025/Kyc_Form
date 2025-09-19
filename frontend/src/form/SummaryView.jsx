@@ -273,9 +273,25 @@ const SummaryView = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-8 text-center text-[#6B5DC7]">
+      <h1 className="text-2xl font-bold  text-center text-[#6B5DC7]">
         KYC Summary
       </h1>
+      <div className="flex justify-end gap-4 mb-2">
+        <Button
+          type="primary"
+          className="!bg-[#6B5DC7] !hover:bg-[#5746b8] !transition !duration-300 !font-semibold !w-[150px] !py-3 !rounded-lg !text-white shadow-md"
+          onClick={downloadPdf}
+        >
+          Download PDF
+        </Button>
+
+        <Button
+          className="!bg-[#F5F5F5] !hover:bg-[#E2E2E2] !transition !duration-300 !font-semibold !w-[150px] !py-3 !rounded-lg !text-gray-700 shadow-sm"
+          onClick={() => dispatch(handleChangeCurrentPanel(1))}
+        >
+          Edit
+        </Button>
+      </div>
 
       {/* Basic Details */}
       <Card
@@ -383,22 +399,6 @@ const SummaryView = () => {
       <Divider />
 
       {/* Action Buttons */}
-      <div className="flex justify-end gap-4">
-        <Button
-          type="primary"
-          className="!bg-[#6B5DC7] !hover:bg-[#5746b8] !transition !duration-300 !font-semibold !w-[150px] !py-3 !rounded-lg !text-white shadow-md"
-          onClick={downloadPdf}
-        >
-          Download PDF
-        </Button>
-
-        <Button
-          className="!bg-[#F5F5F5] !hover:bg-[#E2E2E2] !transition !duration-300 !font-semibold !w-[150px] !py-3 !rounded-lg !text-gray-700 shadow-sm"
-          onClick={() => dispatch(handleChangeCurrentPanel(1))}
-        >
-          Edit
-        </Button>
-      </div>
     </div>
   );
 };
