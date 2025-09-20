@@ -1,80 +1,3 @@
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axiosInstance from "../../api/axiosInstance";
-
-// export const saveKyc = createAsyncThunk(
-//   "kyc/saveKyc",
-//   async (payload, { rejectWithValue }) => {
-//     try {
-//       const res = await axiosInstance.post("/kyc/basic-detail", payload);
-//       return res.data;
-//     } catch (err) {
-//       return rejectWithValue(err.response?.data?.message || err.message);
-//     }
-//   }
-// );
-
-// export const fetchKycData = createAsyncThunk(
-//   "kyc/fetchKycData",
-//   async (userId, { rejectWithValue }) => {
-//     try {
-//       const res = await axiosInstance.get(`/kyc/basic-detail/${userId}`);
-//       return res.data;
-//     } catch (err) {
-//       return rejectWithValue(err.response?.data?.message || err.message);
-//     }
-//   }
-// );
-
-// const kycSlice = createSlice({
-//   name: "kyc",
-//   initialState: {
-//     loading: false,
-//     error: null,
-//     kyc: null,
-//     basicDetails: null,
-//     currentSelectedPanel: 1,
-//   },
-//   reducers: {
-//     resetBasicDetails: (state) => {
-//       state.basicDetails = null;
-//     },
-//     handleChangeCurrentPanel: (state, action) => {
-//       state.currentSelectedPanel = action.payload;
-//     },
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(saveKyc.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(saveKyc.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.kyc = action.payload.kyc;
-//         state.basicDetails = action.payload.kyc;
-//       })
-//       .addCase(saveKyc.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload;
-//       })
-//       .addCase(fetchKycData.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(fetchKycData.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.basicDetails = action.payload.basicDetail;
-//       })
-//       .addCase(fetchKycData.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload;
-//       });
-//   },
-// });
-
-// export const { resetBasicDetails, handleChangeCurrentPanel } = kycSlice.actions;
-
-// export default kycSlice.reducer;
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../api/axiosInstance";
 import { logout } from "../auth/authSlice";
@@ -83,7 +6,16 @@ export const saveKyc = createAsyncThunk(
   "kyc/saveKyc",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.post("/kyc/basic-detail", payload);
+      // Check if we're editing someone else's data (admin mode)
+      const editingUserId = localStorage.getItem("editingUserId");
+
+      // If admin is editing another user's data, use that userId
+      const finalPayload = {
+        ...payload,
+        userId: editingUserId || payload.userId,
+      };
+
+      const res = await axiosInstance.post("/kyc/basic-detail", finalPayload);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
@@ -111,6 +43,7 @@ const kycSlice = createSlice({
     kyc: null,
     basicDetails: null,
     currentSelectedPanel: 1,
+    setDefaultNavigation: null,
   },
   reducers: {
     resetBasicDetails: (state) => {
@@ -118,6 +51,9 @@ const kycSlice = createSlice({
     },
     handleChangeCurrentPanel: (state, action) => {
       state.currentSelectedPanel = action.payload;
+    },
+    handlesetDefaultNavigation: (state, action) => {
+      state.setDefaultNavigation = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -156,5 +92,9 @@ const kycSlice = createSlice({
   },
 });
 
-export const { resetBasicDetails, handleChangeCurrentPanel } = kycSlice.actions;
+export const {
+  resetBasicDetails,
+  handleChangeCurrentPanel,
+  handlesetDefaultNavigation,
+} = kycSlice.actions;
 export default kycSlice.reducer;

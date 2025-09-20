@@ -139,3 +139,50 @@ export const getBasicDetail = async (req, res) => {
       .json({ message: "Error fetching KYC", error: error.message });
   }
 };
+
+// Get all KYC data (for admin)
+export const getAllKycData = async (req, res) => {
+  try {
+    // Find all KYC records and populate with user data to get usernames
+    const allKyc = await Kyc.find().populate('createdBy', 'username');
+    
+    if (!allKyc || allKyc.length === 0) {
+      return res.status(404).json({ message: "No KYC data found" });
+    }
+    
+    // Format the response to include username
+    const formattedData = allKyc.map(kyc => ({
+      id: kyc._id,
+      userId: kyc.createdBy?._id,
+      username: kyc.createdBy?.username || "Unknown User",
+      category: kyc.category || "N/A",
+      business: kyc.business || "N/A",
+      email: kyc.email || "N/A",
+      mobile: kyc.mobile?.number || 'N/A',
+      role: kyc.role || "employee",
+      createdAt: kyc.createdAt
+    }));
+    
+    res.status(200).json({ kycData: formattedData });
+  } catch (error) {
+    console.error("Error in getAllKycData:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get all users (for admin)
+export const getAllUsers = async (req, res) => {
+  try {
+    // Find all users but exclude password field for security
+    const users = await User.find().select('-password');
+    
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
+    
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: error.message });
+  }
+};

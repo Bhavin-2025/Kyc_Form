@@ -31,7 +31,17 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    res.json({ message: "Login successful", user });
+    // Modified/New Code
+    // Include role in the response
+    res.json({ 
+      message: "Login successful", 
+      user: {
+        _id: user._id,
+        username: user.username,
+        role: user.role
+      } 
+    });
+    // End of Modified/New Code
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }

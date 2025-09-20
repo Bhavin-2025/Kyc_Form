@@ -11,6 +11,9 @@ const Bottom_Header = () => {
     (state) => state.kyc.currentSelectedPanel
   );
 
+  const DefaultOff = useSelector((state) => state.kyc.setDefaultNavigation);
+  console.log("Def", DefaultOff);
+
   // Modified/New Code - Check if we're in the summary view
   const isInSummaryView = currentSelectedPanel === 5;
 
@@ -29,7 +32,29 @@ const Bottom_Header = () => {
 
   return (
     <div>
-      <div className="flex px-5 py-3 gap-9 bg-[#F3F2F8]">
+      {DefaultOff && (
+        <div className="flex px-5 py-3 gap-9 bg-[#F3F2F8]">
+          {panels
+            .filter((panel) => !panel.isHidden) // Filter out hidden panels
+            .map((details) => {
+              const isActive = currentSelectedPanel === details.value;
+
+              return (
+                <button
+                  key={details?.value}
+                  className={`${
+                    isActive
+                      ? "text-[#6B5DC7] underline underline-offset-12 decoration-2"
+                      : "text-gray-600 font-medium text-sm"
+                  }`}
+                >
+                  {details?.label}
+                </button>
+              );
+            })}
+        </div>
+      )}
+      {/* <div className="flex px-5 py-3 gap-9 bg-[#F3F2F8]">
         {panels
           .filter((panel) => !panel.isHidden) // Filter out hidden panels
           .map((details) => {
@@ -48,7 +73,7 @@ const Bottom_Header = () => {
               </button>
             );
           })}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,3 +1,5 @@
+// backend-mern/models/userModel.js
+
 import mongoose from "mongoose";
 
 const phoneSubSchema = new mongoose.Schema({
@@ -32,6 +34,13 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password required"],
       minlength: 5,
     },
+    // Modified/New Code
+    role: {
+      type: String,
+      enum: ["admin", "employee"],
+      default: "employee"
+    },
+    // End of Modified/New Code
   },
   { timestamps: true }
 );

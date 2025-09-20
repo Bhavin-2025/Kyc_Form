@@ -35,7 +35,14 @@ const Step4AddressDetail = () => {
   const [submitting, setSubmitting] = useState(false);
 
   // Get user ID and KYC data from Redux
-  const userId = useSelector((state) => state.auth.user.user._id);
+  const loggedInUserId = useSelector((state) => state.auth.user.user._id);
+  const { role } = useSelector((state) => state.auth.user.user);
+
+  // Check if admin is editing someone else's data
+  const editingUserId = localStorage.getItem("editingUserId");
+  const userId = (role === "admin" && editingUserId) ? editingUserId : loggedInUserId;
+  // End of Modified/New Code
+  
   const { basicDetails, loading, currentSelectedPanel } = useSelector(
     (state) => state.kyc
   );

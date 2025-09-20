@@ -11,6 +11,7 @@ import {
   resetBasicDetails,
   handleChangeCurrentPanel,
 } from "../features/kyc/kycSlice";
+
 const Step2TermDetail = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -27,8 +28,16 @@ const Step2TermDetail = () => {
   // Track if all master data is loaded
   const [masterDataLoaded, setMasterDataLoaded] = useState(false);
 
+  // Modified/New Code
   // Get user ID and KYC data from Redux
-  const userId = useSelector((state) => state.auth.user.user._id);
+  const loggedInUserId = useSelector((state) => state.auth.user.user._id);
+  const { role } = useSelector((state) => state.auth.user.user);
+
+  // Check if admin is editing someone else's data
+  const editingUserId = localStorage.getItem("editingUserId");
+  const userId = (role === "admin" && editingUserId) ? editingUserId : loggedInUserId;
+  // End of Modified/New Code
+  
   const { basicDetails, loading, currentSelectedPanel } = useSelector(
     (state) => state.kyc
   );
